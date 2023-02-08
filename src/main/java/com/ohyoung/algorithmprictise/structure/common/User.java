@@ -1,25 +1,34 @@
 package com.ohyoung.algorithmprictise.structure.common;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
 
 /**
- * author: ohyoung
- * date: 2023/2/318:23
+ * @author ohyoung
+ * @date 2023/2/318:23
  */
-@Data
+@Getter
 @Slf4j
 public class User {
 
+    @Setter
     private String name;
 
-    private LinkedList<User> fans;
+    private final LinkedList<User> fans;
 
-    private LinkedList<User> focusList;
+    private final LinkedList<User> focusList;
 
     public User() {
+        fans = new LinkedList<>();
+        focusList = new LinkedList<>();
+    }
+
+    public User(String name) {
+        this.name = name;
         fans = new LinkedList<>();
         focusList = new LinkedList<>();
     }
