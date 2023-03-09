@@ -1,6 +1,6 @@
 package com.ohyoung.algorithmprictise.structure.graph;
 
-import com.ohyoung.algorithmprictise.structure.common.User;
+import com.ohyoung.algorithmprictise.structure.common.UserByLinkList;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,13 +15,13 @@ import java.util.*;
 @Data
 public class DirectedGraph {
 
-    private Map<String, User> directedGraphData;
+    private Map<String, UserByLinkList> directedGraphData;
 
     public DirectedGraph() {
         this.directedGraphData = new TreeMap<>();
     }
 
-    public DirectedGraph(Map<String, User> directedGraphData) {
+    public DirectedGraph(Map<String, UserByLinkList> directedGraphData) {
         this.directedGraphData = directedGraphData;
     }
 
@@ -34,8 +34,8 @@ public class DirectedGraph {
      * 根据用户名称的首字母排序，分页获取用户的关注列表。
      */
 
-    public boolean addUser(User user) {
-        directedGraphData.put(user.getName(), user);
+    public boolean addUser(UserByLinkList userByLinkList) {
+        directedGraphData.put(userByLinkList.getName(), userByLinkList);
         return true;
     }
 
@@ -43,54 +43,54 @@ public class DirectedGraph {
     /**
      * current是否被target关注
      */
-    public boolean isFollow(User current, User target) {
-        User user = directedGraphData.get(current.getName());
-        if (!isExist(user)) {
+    public boolean isFollow(UserByLinkList current, UserByLinkList target) {
+        UserByLinkList userByLinkList = directedGraphData.get(current.getName());
+        if (!isExist(userByLinkList)) {
             log.error("current user is not exist");
             return false;
         }
-        return user.getFans().stream().anyMatch(f -> target.getName().equals(f.getName()));
+        return userByLinkList.getFans().stream().anyMatch(f -> target.getName().equals(f.getName()));
     }
 
     /**
      * current是否关注了target
      */
-    public boolean isFans(User current, User target) {
-        User user = directedGraphData.get(current.getName());
-        if (!isExist(user)) {
+    public boolean isFans(UserByLinkList current, UserByLinkList target) {
+        UserByLinkList userByLinkList = directedGraphData.get(current.getName());
+        if (!isExist(userByLinkList)) {
             log.error("current user is not exist");
             return false;
         }
-        return user.getFocusList().stream().anyMatch(f -> target.getName().equals(f.getName()));
+        return userByLinkList.getFocusList().stream().anyMatch(f -> target.getName().equals(f.getName()));
     }
 
     /**
      * current关注target
      */
-    public boolean focus(User current, User target) {
+    public boolean focus(UserByLinkList current, UserByLinkList target) {
         return current.link(target);
     }
 
     /**
      * current取关target
      */
-    public boolean unFocus(User current, User target) {
+    public boolean unFocus(UserByLinkList current, UserByLinkList target) {
         return current.unlink(target);
     }
 
-    public boolean isExist(User user) {
-        return Objects.nonNull(user);
+    public boolean isExist(UserByLinkList userByLinkList) {
+        return Objects.nonNull(userByLinkList);
     }
 
     public static void main(String[] args) {
         DirectedGraph directedGraph = new DirectedGraph();
-        User a = new User("a");
+        UserByLinkList a = new UserByLinkList("a");
         directedGraph.addUser(a);
-        User b = new User("b");
+        UserByLinkList b = new UserByLinkList("b");
         directedGraph.addUser(b);
-        User c = new User("c");
+        UserByLinkList c = new UserByLinkList("c");
         directedGraph.addUser(c);
-        User d = new User("d");
+        UserByLinkList d = new UserByLinkList("d");
         directedGraph.addUser(d);
         a.link(b);
         b.link(c);

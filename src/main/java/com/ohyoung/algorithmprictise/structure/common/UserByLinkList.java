@@ -1,6 +1,5 @@
 package com.ohyoung.algorithmprictise.structure.common;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -9,31 +8,31 @@ import java.util.LinkedList;
 
 /**
  * @author ohyoung
- * @date 2023/2/318:23
+ * @date 2023/2/3 18:23
  */
 @Getter
 @Slf4j
-public class User {
+public class UserByLinkList {
 
     @Setter
     private String name;
 
-    private final LinkedList<User> fans;
+    private final LinkedList<UserByLinkList> fans;
 
-    private final LinkedList<User> focusList;
+    private final LinkedList<UserByLinkList> focusList;
 
-    public User() {
+    public UserByLinkList() {
         fans = new LinkedList<>();
         focusList = new LinkedList<>();
     }
 
-    public User(String name) {
+    public UserByLinkList(String name) {
         this.name = name;
         fans = new LinkedList<>();
         focusList = new LinkedList<>();
     }
 
-    public boolean link(User target) {
+    public boolean link(UserByLinkList target) {
         boolean targetExist = focusList.stream().anyMatch(u -> u.getName().equals(target.getName()));
         if (targetExist) {
             log.error("target is focused: {}", target);
@@ -45,9 +44,9 @@ public class User {
         return true;
     }
 
-    public boolean unlink(User target) {
-        for (User user : focusList) {
-            if (user.getName().equals(target.getName())) {
+    public boolean unlink(UserByLinkList target) {
+        for (UserByLinkList userByLinkList : focusList) {
+            if (userByLinkList.getName().equals(target.getName())) {
                 focusList.remove(target);
                 // target粉丝列表-1
                 target.fans.remove(this);
